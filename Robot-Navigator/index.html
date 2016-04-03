@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css\\style.css"/>
+<script type="text/javascript" src="js\\commandProcessor.js"></script>
+</head>
+<body">
+<h2>Toy Robot Simulation</h2>
+<div class="command"> Command : 
+<span>
+<input type="text" id="command"  placeholder="PLACE 0,2,NORTH MOVE REPORT"> 
+</span>
+<span>
+<input type="submit" onclick='onButtonClick()'>
+</span>
+<span id="error"></span>
+</div>
+<div class="report"> Report : <span id="report"></span>
+</div>
+<svg width="550" height="550" >
+<rect cx="0" cy="500" width="550" height="550" style="fill:none;stroke-width:3;stroke:rgb(0,0,0)">
+</rect>
+  <circle cx="100" cy="500" r="50" id="circle" stroke="green" stroke-width="1" fill="green"  /> 
+</svg>
+</body>
+</html>

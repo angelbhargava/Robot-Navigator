@@ -25,10 +25,9 @@ function move() {
     var currentDirection = this.robot.currentDirection;
 	var newY = this.robot.currentYCoordinates + Direction[currentDirection.toUpperCase()].stepSizeOnYAxis;
 	var newX = this.robot.currentXCoordinates + Direction[currentDirection.toUpperCase()].stepSizeOnXAxis;
-	if (validYCoordinate(maxYCoordinate) && validXCoordinate(maxXCoordinate)) {
+	if (validYCoordinate(newY) && validXCoordinate(newX)) {
         this.robot.currentYCoordinates = newY;
-		this.robot.currentXCoordinates = newX;
-        drawRobot(this.robot);
+		this.robot.currentXCoordinates = newX;       
     }
 }
 
@@ -37,7 +36,7 @@ function validXCoordinate(axis) {
        writeError("Please enter a numeric X coordinates!");
         return false;
     } else if (axis < 0 || axis > maxXCoordinate) {
-       
+        writeError("X coordinates out of range!");
         return false;
     } else {
         return true;
@@ -57,7 +56,7 @@ function validYCoordinate(axis) {
         writeError("Please enter a numeric Y coordinates!");
         return false;
     } else if (axis < 0 || axis > maxYCoordinate) {
-        
+        writeError("Y coordinates out of range!");
         return false; 
         
         
@@ -75,8 +74,23 @@ function place(posCmd) {
         robot.currentXCoordinates = newX;
         robot.currentYCoordinates = newY;
         robot.currentDirection = newDirection;
-        drawRobot(robot);
+       
     }
+}
+
+function drawRobot(newRobot) {    
+	var robPos=document.getElementById("circle");
+    var axisX = (newRobot.currentXCoordinates + 1) * 100;
+    var axisY = (5 - newRobot.currentYCoordinates) * 100;
+	robPos.setAttribute('cx',axisX);
+	robPos.setAttribute('cy',axisY);
+
+}
+
+function getReport(){
+
+return this.robot.currentXCoordinates + "," + this.robot.currentYCoordinates + "," + this.robot.currentDirection;
+
 }
 
 function report() { 
@@ -114,9 +128,11 @@ if (commandInitiated) {
         case "PLACE":
             var posCmd = completeCmd.slice(1).join("");
             place(completeCmd[1]);
+			drawRobot(robot);
             break;
         case "MOVE":
-            move();
+		    move();
+			drawRobot(robot);
             break;
         case "LEFT":
             left();
@@ -137,6 +153,7 @@ else if ((!commandInitiated && literalCmd.toUpperCase() === 'PLACE')){
 		var posCmd =   completeCmd[1]+","+completeCmd[2];
 		console.log(posCmd);
 	    place(posCmd);
+		drawRobot(robot);
 } else {
  
         writeError("The first valid command to the robot must be a PLACE command!");
@@ -156,15 +173,6 @@ var robot = {
     currentYCoordinates:0,
     currentDirection: Direction.NORTH 
 };
-
-function drawRobot(newRobot) {    
-	var robPos=document.getElementById("circle");
-    var axisX = (newRobot.currentXCoordinates + 1) * 100;
-    var axisY = (5 - newRobot.currentYCoordinates) * 100;
-	robPos.setAttribute('cx',axisX);
-	robPos.setAttribute('cy',axisY);
-
-}
 
 
 
